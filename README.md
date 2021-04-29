@@ -4,5 +4,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of slides_xaringan_broom is to ...
+Para la presentación, hacer click [aquí]() 
+
+Para el código de R, hacer click [aquí]()
+
 

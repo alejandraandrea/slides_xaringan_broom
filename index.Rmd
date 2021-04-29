@@ -1,0 +1,193 @@
+---
+title: "Algunas funciones favoritas de {broom}"
+#subtitle: ""
+author: "Alejandra Tapia Silva"
+institute: "R-Ladies Talca"
+date: "30/04/2021"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js 
+    css: ["default","rladies","lucy-fonts","custom.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+class: center, middle
+
+```{r xaringan-logo, echo=FALSE}
+xaringanExtra::use_logo(
+  image_url = "https://rladies.org/wp-content/uploads/2016/12/R-LadiesGlobal.png"
+)
+```
+
+## ¿Por qué funciones favoritas de {broom}?
+
+![](https://media.giphy.com/media/3JUsda8zZiFvQD0ioo/giphy.gif)
+---
+class: center, middle
+
+## `Porque son funciones que integran los datos y resultados del modelamiento`
+
+
+---
+class: center, middle
+
+## `Esto facilita informar los resultados, crear gráficos y trabajar con un gran número de modelos a la vez`
+
+---
+class: left
+
+## Paquetes 
+
+.center[
+<img src=imgs/hex_tidyverse.png width="30%">
+<img src=imgs/hex_tidymodels.png width="30%">
+<img src=imgs/hex_broom.png width="30%"> 
+]
+
+---
+class: Left, middle
+
+## Funciones <img src="imgs/hex_broom.png" alt="Sharingan" width="10%" align="center"/>
+
+###`>` tidy() 
+
+###`>` glance()
+
+###`>` augment_columns()
+
+
+---
+class: left, middle
+
+## Cargar paquetes 
+.left[
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(broom)
+```
+]
+
+---
+class: center, middle
+## El conjunto de datos
+
+---
+class: left, middle
+## `Especies de tortugas en las distintas islas Galápagos` `r emo::ji("turtle")` `r emo::ji("desert_island")`
+
+```{r message=FALSE}
+library(faraway)
+glimpse(gala)
+```
+
+---
+class: center, middle
+
+### `Supongamos que queremos saber si existen influencia de la elevación de la isla en metros (Elevation) y el número de especies de tortugas que se encuentran en la isla (Species)`  
+
+.center[
+<img src=imgs/turtle.png width="60%">
+]
+
+---
+class: left, middle
+.left[
+## Ajustar un modelo lineal 
+```{r message=FALSE}
+model_fit <- lm(Species ~ Elevation, data=gala)
+```
+]
+
+---
+class: left, middle
+## tidy() 
+
+### Construye un tibble que resume información estadística sobre el ajuste del modelo
+
+.left[
+```{r message=FALSE}
+tidy(model_fit) %>% tibble::as_tibble()
+```
+]
+
+---
+class: left, middle
+## glance()
+
+
+### Construye un resumen de otras informaciones relacionadas al ajuste del modelo 
+.left[
+```{r message=FALSE}
+glance(model_fit) %>% tibble::as_tibble()
+```
+]
+
+---
+class: left, middle
+## augment() 
+
+### Agregar columnas con información relacionada a los datos que se modelaron
+.left[
+```{r message=FALSE}
+augment(model_fit)
+```
+]
+
+
+---
+class: left, middle
+## augment() 
+
+.pull-left[
+```{r plot-last2, fig.show = 'hide'}
+info_fit<-
+  augment(model_fit) 
+
+info_fit %>% 
+ggplot(aes(x=Elevation,y=Species))+ 
+geom_jitter(alpha=.2)+
+geom_line(aes(x=Elevation,y=.fitted))+
+theme_bw()
+```
+]
+
+.pull-right[
+```{r ref.label = 'plot-last2', echo = FALSE}
+
+```
+]
+
+
+
+
+---
+class: left
+
+##`Referencias``r emo::ji("book")`
+
+### > David Robinson y + 122
+
+https://github.com/tidymodels/broom
+
+### > Max Kuhn, Hadley Wickham and RStudio
+
+https://www.tidymodels.org/
+
+---
+class: center, middle
+
+
+.center[<img src=imgs/R-Ladies_Talca_hex.png width="30%">]
+
+
+##### Presentación creada con el paquete [**xaringan**](https://github.com/yihui/xaringan) de [**Yihui Xie**](https://github.com/yihui) y el tema [**rladies**](https://github.com/rbind/apreshill/blob/master/static/slides/rladies-demo-slides.Rmd) de [**Alison Hill**](https://github.com/apreshill) 
+
+<img src="imgs/logo_twitter.png" alt="Sharingan" width="6%" align="center"/>
+`@aleants @RLadiesTalca` 
+<img src="imgs/logo_instagram.png" alt="Sharingan" width="6%" align="center"/>
+`@rladiestalca`
