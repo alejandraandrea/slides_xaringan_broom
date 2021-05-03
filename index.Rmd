@@ -57,7 +57,7 @@ class: Left, middle
 
 ###`>` glance()
 
-###`>` augment_columns()
+###`>` augment()
 
 
 ---
